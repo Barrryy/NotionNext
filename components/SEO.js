@@ -116,6 +116,9 @@ const SEO = props => {
       <meta name='apple-mobile-web-app-title' content={title} />
 
       {/* 搜索引擎验证 */}
+
+      <meta name="follow.it-verification-code" content="LVlC1dMU7lBLp8YpBF2p"/> {/*follow.it认证*/}
+
       {SEO_GOOGLE_SITE_VERIFICATION && (
         <meta
           name='google-site-verification'
