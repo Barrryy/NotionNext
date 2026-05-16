@@ -10,7 +10,7 @@ import NotByAI from '@/components/NotByAI'
  * 版权声明
  * @returns
  */
-export default function PostCopyright() {
+export default function PostCopyright({ post }) {
   const router = useRouter()
   const [path, setPath] = useState('') // 初始状态为空
   const [copied, setCopied] = useState(false) // 复制成功提示
@@ -57,7 +57,7 @@ export default function PostCopyright() {
         </li>
         <li>
           <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
-          {locale.COMMON.COPYRIGHT_NOTICE}
+          {post.copyright || locale.COMMON.COPYRIGHT_NOTICE}
         </li>
         {siteConfig('HEO_ARTICLE_NOT_BY_AI', false, CONFIG) && (
           <li>
