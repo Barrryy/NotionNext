@@ -39,6 +39,9 @@
     "deps:check-lockfile": "yarn install --frozen-lockfile && git diff --exit-code yarn.lock",
     "clean": "node scripts/dev-tools.js clean",
     "docs": "node scripts/dev-tools.js docs",
+    "docs:site:dev": "vitepress dev",
+    "docs:site:build": "vitepress build",
+    "docs:site:preview": "vitepress preview",
     "check-updates": "node scripts/dev-tools.js check-updates",
     "setup-hooks": "node scripts/setup-git-hooks.js install",
     "remove-hooks": "node scripts/setup-git-hooks.js remove",
@@ -117,6 +120,7 @@
     "sharp": "^0.34.5",
     "tailwindcss": "^3.4.17",
     "typescript": "5.6.2",
+    "vitepress": "^1.6.3",
     "webpack-bundle-analyzer": "^4.5.0"
   },
   "resolutions": {

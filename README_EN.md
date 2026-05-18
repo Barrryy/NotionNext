@@ -36,6 +36,15 @@ A static blog system built with NextJS and Notion API, deployed on Vercel. Desig
 
 **Repository hosting:** The main repository is maintained by the GitHub organization **[notionnext-org](https://github.com/notionnext-org)** (canonical: `https://github.com/notionnext-org/NotionNext`). Contributions are welcome; see the org page for collaboration. If you cloned before the transfer, run `git remote set-url origin https://github.com/notionnext-org/NotionNext.git` and verify with `git remote -v`.
 
+## Community
+
+| | |
+| --- | --- |
+| **Participate** | [community-participate.md](./docs/user-guide/community-participate.md) · [Discussions](https://github.com/notionnext-org/NotionNext/discussions) |
+| **Contributing** | [CONTRIBUTING.md](./CONTRIBUTING.md) |
+| **Governance** | [GOVERNANCE.md](./GOVERNANCE.md) · [MAINTAINERS.md](./MAINTAINERS.md) |
+| **Code of Conduct** | [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) |
+| **Docs site** | [notionnext.tangly1024.com](https://notionnext.tangly1024.com) |
 
 ## 3-Minute Quick Start
 
@@ -63,22 +72,16 @@ Note: local workflow stays simple (`yarn`), while lockfile consistency is enforc
 
 To help new contributors get started quickly, the project keeps docs bilingual with clear entry points:
 
-- [文档导航入口（中文）](./docs/README.md)
-- [Docs Navigation (English)](./docs/README.en.md)
-- [主题迁移指南（中文）](./docs/THEME_MIGRATION_GUIDE.zh-CN.md)
-- [Theme Migration Guide (English)](./docs/THEME_MIGRATION_GUIDE.md)
-- [贡献入口（中文）](./CONTRIBUTING.zh-CN.md)
+- [Docs index (中文)](./docs/README.md)
+- [Developer docs (English)](./docs/developer/README.en.md)
+- [Contribution (中文)](./CONTRIBUTING.zh-CN.md)
 - [Contribution Guide (English)](./CONTRIBUTING.md)
-- [维护与变更尺度（中文）](./docs/MAINTENANCE_PHILOSOPHY.zh-CN.md)
-- [Maintenance & change control (English)](./docs/MAINTENANCE_PHILOSOPHY.en.md)
 
-## Preview
+## Themes & preview
 
-Live Demo：[https://preview.tangly1024.com/](https://preview.tangly1024.com/) ，Project supports switching between multiple themes. Can't find a theme you like? How about [contributing](/CONTRIBUTING.md) one?~
-
-| Next | Medium | Hexo | Fukasawa |
-|--|--|--|--|
-| <img src='./docs/theme-next.png' width='300'/> [NEXT](https://preview.tangly1024.com/?theme=next)  | <img src='./docs/theme-medium.png' width='300'/> [MEDIUM](https://preview.tangly1024.com/?theme=medium) | <img src='./docs/theme-hexo.png' width='300'/> [HEXO](https://preview.tangly1024.com/?theme=hexo) | <img src='./docs/theme-fukasawa.png' width='300'/> [FUKASAWA](https://preview.tangly1024.com/?theme=fukasawa) |
+- **Live theme switcher**: [preview.tangly1024.com](https://preview.tangly1024.com/)
+- **All 25 themes**: [THEMES_CATALOG.md](./docs/user-guide/themes/THEMES_CATALOG.md)
+- New theme? See [CONTRIBUTING.md](./CONTRIBUTING.md) and [Theme Migration Guide](./docs/developer/THEME_MIGRATION_GUIDE.md)
 
 ## Acknowledgements
 

@@ -1,14 +1,17 @@
 import fs from 'fs'
-import path from 'path'
 
 interface QueueItem<T> {
   requestFunc: () => Promise<T>
   resolve: (value: T) => void
-  reject: (err: any) => void
+  reject: (err: unknown) => void
+}
+
+interface NodeError extends Error {
+  code?: string
 }
 
 export class RateLimiter {
-  private queue: QueueItem<any>[] = []
+  private queue: QueueItem<unknown>[] = []
   private inflight = new Set<string>()
   private isProcessing = false
   private lastRequestTime = 0
@@ -39,8 +42,9 @@ export class RateLimiter {
       try {
         fs.writeFileSync(this.lockFilePath, process.pid.toString(), { flag: 'wx' })
         return
-      } catch (err: any) {
-        if (err.code === 'EEXIST') await new Promise(res => setTimeout(res, 100))
+      } catch (err) {
+        const e = err as NodeError
+        if (e.code === 'EEXIST') await new Promise(res => setTimeout(res, 100))
         else throw err
       }
     }
@@ -54,19 +58,27 @@ export class RateLimiter {
 
   public enqueue<T>(key: string, requestFunc: () => Promise<T>): Promise<T> {
     if (this.inflight.has(key)) {
-      return new Promise((resolve, reject) => {
+      return new Promise<T>((resolve, reject) => {
         const interval = setInterval(() => {
           if (!this.inflight.has(key)) {
             clearInterval(interval)
-            this.enqueue(key, requestFunc).then(resolve).catch(reject)
+            // 用 void 显式标记忽略：递归 enqueue 自身已串接 resolve/reject
+            void this.enqueue(key, requestFunc).then(resolve).catch(reject)
           }
         }, 50)
       })
     }
 
-    return new Promise((resolve, reject) => {
-      this.queue.push({ requestFunc, resolve, reject })
-      if (!this.isProcessing) this.processQueue()
+    return new Promise<T>((resolve, reject) => {
+      this.queue.push({
+        requestFunc: requestFunc as () => Promise<unknown>,
+        resolve: resolve as (value: unknown) => void,
+        reject
+      })
+      if (!this.isProcessing) {
+        // processQueue 是 async 但这里不 await，需要兜底捕获
+        void this.processQueue()
+      }
     })
   }
 
@@ -96,7 +108,7 @@ export class RateLimiter {
       this.inflight.add(key)
 
       try {
-        const result = await requestFunc()
+        const result: unknown = await requestFunc()
         this.lastRequestTime = Date.now()
         this.requestCount++
         resolve(result)
@@ -107,7 +119,10 @@ export class RateLimiter {
       console.error('限流队列异常', err)
     } finally {
       this.releaseLock()
-      setTimeout(() => this.processQueue(), 0)
+      // 显式忽略下一轮的返回 Promise
+      setTimeout(() => {
+        void this.processQueue()
+      }, 0)
     }
   }
 }

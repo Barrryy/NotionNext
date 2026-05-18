@@ -1,7 +1,9 @@
 # Contributing
 
 - [Repository and organization](#repository-and-organization)
+- [First contribution](#first-contribution)
 - [Setup](#setup)
+- [Community and governance](#community-and-governance)
 - [Creating new themes](#creating-new-themes)
 - [Adding localizations](#adding-localizations)
 - [Environment Variables](#environment-variables)
@@ -25,6 +27,14 @@ git remote -v
 
 The fork-and-PR workflow is unchanged; open pull requests against **notionnext-org/NotionNext**.
 
+## First contribution
+
+1. Pick an issue labeled **`good first issue`**, or fix a doc page you are reading.  
+2. Docs: edit `docs/user-guide/**/*.md`, preview with `yarn docs:site:dev`, open a PR. See [maintain-docs](./docs/user-guide/maintain-docs.md).  
+3. Code: use a feature branch, run lint/type-check/tests, open a PR.  
+4. Larger changes: read [RFC guide](./docs/developer/rfc/README.md) or start a [Discussion](https://github.com/notionnext-org/NotionNext/discussions) first.  
+5. Maintainer path: [community-participate](./docs/user-guide/community-participate.md) · [MAINTAINERS.md](./MAINTAINERS.md).
+
 ## Setup
 
 To contribute to NotionNext, follow these steps:
@@ -46,7 +56,7 @@ Please follow these rules for every contribution:
 4. Do not submit personalized config defaults that can affect other contributors.
 5. Run lint/tests before opening PR.
 
-Core maintainers should also read [Maintenance and change-control philosophy](./docs/MAINTENANCE_PHILOSOPHY.en.md) to keep `main` stable and reviewable.
+Core maintainers should also read [Maintenance and change-control philosophy](./docs/developer/MAINTENANCE_PHILOSOPHY.en.md) to keep `main` stable and reviewable.
 
 For full Chinese workflow guidance, see:
 
@@ -86,6 +96,13 @@ NotionNext uses environment variables for configuration. To set up your developm
 1. Copy `.env.example` to `.env.local`
 2. Fill in the required values in `.env.local`
 3. Never commit `.env.local` to version control
+
+## Community and governance
+
+- [Participate](./docs/user-guide/community-participate.md)  
+- [Governance](./GOVERNANCE.md) · [Maintainers](./MAINTAINERS.md)  
+- [Code of Conduct](./CODE_OF_CONDUCT.md)  
+- [Discussions](https://github.com/notionnext-org/NotionNext/discussions)
 
 The configuration priority is:
 1. Notion Config Table (highest)

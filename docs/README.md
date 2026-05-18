@@ -1,43 +1,49 @@
-# NotionNext 文档导航
+# NotionNext 文档（`docs/`）
 
-中文 | [English](./README.en.md)
+| | |
+| --- | --- |
+| **在线阅读** | [https://notionnext.tangly1024.com](https://notionnext.tangly1024.com) |
+| **参与社区** | [user-guide/community-participate.md](./user-guide/community-participate.md) · [GOVERNANCE.zh-CN.md](../GOVERNANCE.zh-CN.md) |
+| **参与维护** | 在线页底「在 GitHub 上维护此页」· [user-guide/maintain-docs.md](./user-guide/maintain-docs.md) |
+| **旧版手册** | [user-guide/help/legacy-docs.md](./user-guide/help/legacy-docs.md) · 源站 [docs.tangly1024.com](https://docs.tangly1024.com) |
 
-本目录用于帮助开源贡献者和新开发者快速理解项目并安全协作。
+## 本目录结构（仅两类）
 
-## 仓库与组织
-
-主仓库现由 GitHub 组织 **[notionnext-org](https://github.com/notionnext-org)** 管理（canonical：`https://github.com/notionnext-org/NotionNext`），已从个人账号迁移以便长期治理。**欢迎加入组织**参与协作（以组织内说明为准）。若在迁移前已克隆本地仓库，建议执行：
-
-```bash
-git remote set-url origin https://github.com/notionnext-org/NotionNext.git
+```text
+docs/
+├── index.md                 # 在线站首页
+├── DOCUMENTATION_POLICY.md  # 在线：文档维护策略
+├── user-guide/              # 在线：站长教程（主体）
+└── developer/               # 仅 GitHub：开发者文档与主题长文（不进在线站）
 ```
 
-详见 [贡献指南（中文）](../CONTRIBUTING.zh-CN.md#仓库与组织) / [Contributing (English)](../CONTRIBUTING.md#repository-and-organization)。
+### 在线站包含什么
 
-## 文档入口（中英双语）
+`user-guide/` 全部，以及根目录 `index.md`、`DOCUMENTATION_POLICY.md`。  
+构建命令：`yarn docs:site:build` → 发布到 [notionnext.tangly1024.com](https://notionnext.tangly1024.com)。
 
-| 主题 | 中文 | English |
-| --- | --- | --- |
-| 快速上手 | [GETTING_STARTED.md](./GETTING_STARTED.md) | [GETTING_STARTED.en.md](./GETTING_STARTED.en.md) |
-| 架构总览 | [ARCHITECTURE.md](./ARCHITECTURE.md) | [ARCHITECTURE.en.md](./ARCHITECTURE.en.md) |
-| 目录与模块说明 | [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) | [PROJECT_STRUCTURE.en.md](./PROJECT_STRUCTURE.en.md) |
-| 配置体系说明 | [CONFIGURATION.md](./CONFIGURATION.md) | [CONFIGURATION.en.md](./CONFIGURATION.en.md) |
-| 提交与 PR 规范 | [CONTRIBUTION_WORKFLOW.md](./CONTRIBUTION_WORKFLOW.md) | [CONTRIBUTION_WORKFLOW.en.md](./CONTRIBUTION_WORKFLOW.en.md) |
-| 维护与变更尺度 | [MAINTENANCE_PHILOSOPHY.zh-CN.md](./MAINTENANCE_PHILOSOPHY.zh-CN.md) | [MAINTENANCE_PHILOSOPHY.en.md](./MAINTENANCE_PHILOSOPHY.en.md) |
-| 主题迁移指南 | [THEME_MIGRATION_GUIDE.zh-CN.md](./THEME_MIGRATION_GUIDE.zh-CN.md) | [THEME_MIGRATION_GUIDE.md](./THEME_MIGRATION_GUIDE.md) |
-| 社区官网能力扩展路线 | [COMMUNITY_SITE_ROADMAP.md](./COMMUNITY_SITE_ROADMAP.md) | — |
+### 不在在线站的内容
 
-## 主题文档
+全部在 **[`developer/`](./developer/README.md)**：架构、贡献流程、`GETTING_STARTED`、主题开发者长文（Claude 等）、性能审计等。
 
-- [Themes Documentation](./themes/README.md)
-- [Claude Theme](./themes/CLAUDE.md)
-- [Endspace Theme](./themes/ENDSPACE.md)
-- [Fuwari Theme](./themes/FUWARI.md)
+---
 
-## 文档目标
+## 如何改教程并上线
 
-- 降低新贡献者的接入门槛
-- 统一项目协作流程，减少重复沟通
-- 避免个性化配置误提交导致冲突
-- 让 PR 评审聚焦业务代码而非环境差异
+1. 编辑 [`user-guide/`](./user-guide/) 下对应 `.md`  
+2. 本地预览：`yarn docs:site:dev`  
+3. 合并 `main` → GitHub Actions 自动部署  
 
+详见 [user-guide/maintain-docs.md](./user-guide/maintain-docs.md) · [user-guide/MAINTENANCE_WORKFLOW.md](./user-guide/MAINTENANCE_WORKFLOW.md)
+
+## 社区与治理（仓库根目录）
+
+- [参与社区](./user-guide/community-participate.md)（在线站可见）  
+- [GOVERNANCE.zh-CN.md](../GOVERNANCE.zh-CN.md) · [MAINTAINERS.md](../MAINTAINERS.md) · [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)  
+- [Discussions](https://github.com/notionnext-org/NotionNext/discussions) · [CONTRIBUTING.zh-CN.md](../CONTRIBUTING.zh-CN.md)
+
+Org 管理员还需在 GitHub 启用 Discussions、Giscus App、分支保护等，见治理文档末尾清单。
+
+## 开发者请进
+
+→ **[developer/README.md](./developer/README.md)**
