@@ -19,6 +19,8 @@ import { useEffect, useState } from 'react'
 import { getStaticPathsBase } from '@/lib/build/staticPaths'
 import { isExport } from '@/lib/utils/buildMode'
 
+const isStaticExport = process.env.EXPORT === 'true'
+
 /**
  * 根据notion的slug访问页面
  * 只解析一级目录例如 /about
@@ -137,7 +139,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
 
   return {
     props,
-    revalidate: isExport()
+    revalidate: isStaticExport
       ? undefined
       : siteConfig(
         'NEXT_REVALIDATE_SECOND',

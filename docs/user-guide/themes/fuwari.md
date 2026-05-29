@@ -1,6 +1,10 @@
-﻿# Fuwari 主题
+# Fuwari 主题
 
 > 主题 ID：`fuwari` · 预览：[preview.tangly1024.com/?theme=fuwari](https://preview.tangly1024.com/?theme=fuwari)
+
+## 主题预览
+
+![Fuwari 主题预览](/images/themes-preview/fuwari.webp)
 
 ## 简介
 

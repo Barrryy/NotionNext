@@ -3,6 +3,7 @@ const path = require('node:path')
 const BLOG = require('./blog.config')
 const { extractLangPrefix } = require('./lib/utils/pageId')
 const { isExport } = require('./lib/utils/buildMode')
+const { getStaticPageGenerationTimeoutSec } = require('./lib/build/buildEnv')
 
 // 打包时是否分析代码
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -157,7 +158,7 @@ const nextConfig = {
     ignoreDuringBuilds: true
   },
   output: getOutput(),
-  staticPageGenerationTimeout: 300,
+  staticPageGenerationTimeout: getStaticPageGenerationTimeoutSec(),
 
   // 性能优化配置
   compress: true,
@@ -261,6 +262,19 @@ const nextConfig = {
 
       return [
         ...langsRewrites,
+        // RSS fallback: when static file doesn't exist, route to API
+        {
+          source: '/rss/feed.xml',
+          destination: '/api/rss'
+        },
+        {
+          source: '/rss/atom.xml',
+          destination: '/api/rss?format=atom'
+        },
+        {
+          source: '/rss/feed.json',
+          destination: '/api/rss?format=json'
+        },
         // 伪静态重写
         {
           source: '/:path*.html',

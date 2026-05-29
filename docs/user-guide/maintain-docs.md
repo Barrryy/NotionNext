@@ -6,6 +6,8 @@
 
 源码与 GitHub 上的 Markdown **一一对应**；改仓库 → 合并 `main` → 自动发布。
 
+每一次文档修正都会帮助后来的站长少踩一次坑。参与维护文档的开发者会出现在 [文档提交记录](https://github.com/notionnext-org/NotionNext/commits/main/docs) 与 [致谢页](./acknowledgements.md) 中。
+
 ## 改当前这一页
 
 任意教程页底部有 **「在 GitHub 上维护此页」**，直达该文件的编辑界面。
@@ -39,7 +41,7 @@ push main（docs/user-guide/ 等变更）
 
 ## 与旧版在线手册
 
-[docs.tangly1024.com](https://docs.tangly1024.com) 为历史 Notion 托管；**以 `docs/user-guide/` 与 notionnext.tangly1024.com 为准**。
+[docs.tangly1024.com](/user-guide/intro) 为历史 Notion 托管；**以 `docs/user-guide/` 与 notionnext.tangly1024.com 为准**。
 
 - slug 对照与旧站直达：[help/legacy-docs.md](./help/legacy-docs.md) · [ARTICLE_INDEX.md](./ARTICLE_INDEX.md)
 - 可选批量拉取旧文：`node scripts/migrate-legacy-docs.mjs --slug <slug>`（加 `--images` 下载图片到 `docs/public/legacy/`）

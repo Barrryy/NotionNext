@@ -20,7 +20,8 @@ export class RateLimiter {
 
   constructor(
     private maxRequestsPerMinute = 200,
-    private lockFilePath?: string
+    private lockFilePath?: string,
+    private minIntervalMs = 300
   ) { }
 
   private async acquireLock() {
@@ -99,8 +100,10 @@ export class RateLimiter {
         this.windowStart = Date.now()
       }
 
-      const minInterval = 300
-      const waitTime = Math.max(0, minInterval - (now - this.lastRequestTime))
+      const waitTime = Math.max(
+        0,
+        this.minIntervalMs - (now - this.lastRequestTime)
+      )
       if (waitTime > 0) await new Promise(res => setTimeout(res, waitTime))
 
       const { requestFunc, resolve, reject } = this.queue.shift()!

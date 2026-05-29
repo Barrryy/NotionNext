@@ -1,6 +1,10 @@
-﻿# Claude 主题
+# Claude 主题
 
 > 主题 ID：`claude` · 预览：[preview.tangly1024.com/?theme=claude](https://preview.tangly1024.com/?theme=claude)
+
+## 主题预览
+
+![Claude 主题预览](/images/themes-preview/claude.webp)
 
 ## 简介
 

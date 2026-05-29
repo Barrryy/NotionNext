@@ -1,6 +1,10 @@
-﻿# ThoughtLite 主题
+# ThoughtLite 主题
 
 > 主题 ID：`thoughtlite` · 预览：[preview.tangly1024.com/?theme=thoughtlite](https://preview.tangly1024.com/?theme=thoughtlite)
+
+## 主题预览
+
+![ThoughtLite 主题预览](/images/themes-preview/thoughtlite.webp)
 
 ## 简介
 

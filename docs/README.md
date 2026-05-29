@@ -5,6 +5,7 @@
 | **在线阅读** | [https://notionnext.tangly1024.com](https://notionnext.tangly1024.com) |
 | **参与社区** | [user-guide/community-participate.md](./user-guide/community-participate.md) · [GOVERNANCE.zh-CN.md](../GOVERNANCE.zh-CN.md) |
 | **参与维护** | 在线页底「在 GitHub 上维护此页」· [user-guide/maintain-docs.md](./user-guide/maintain-docs.md) |
+| **致谢贡献者** | [user-guide/acknowledgements.md](./user-guide/acknowledgements.md) · [Contributors](https://github.com/notionnext-org/NotionNext/graphs/contributors) |
 | **旧版手册** | [user-guide/help/legacy-docs.md](./user-guide/help/legacy-docs.md) · 源站 [docs.tangly1024.com](https://docs.tangly1024.com) |
 
 ## 本目录结构（仅两类）

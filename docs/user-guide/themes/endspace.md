@@ -1,6 +1,10 @@
-﻿# Endspace 主题
+# Endspace 主题
 
 > 主题 ID：`endspace` · 预览：[preview.tangly1024.com/?theme=endspace](https://preview.tangly1024.com/?theme=endspace)
+
+## 主题预览
+
+![Endspace 主题预览](/images/themes-preview/endspace.webp)
 
 ## 简介
 
