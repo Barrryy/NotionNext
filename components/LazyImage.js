@@ -33,15 +33,19 @@ export default function LazyImage({
   title,
   onLoad,
   onClick,
-  style
+  style,
+  loading
 }) {
   const maxWidth = siteConfig('IMAGE_COMPRESS_WIDTH')
   const targetImageWidth = getTargetImageWidth(width, maxWidth)
   const defaultPlaceholderSrc = siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')
   const imageRef = useRef(null)
   const [currentSrc, setCurrentSrc] = useState(
-    placeholderSrc || defaultPlaceholderSrc
+    priority && src
+      ? adjustImgSize(src, targetImageWidth)
+      : placeholderSrc || defaultPlaceholderSrc
   )
+  const [imageLoaded, setImageLoaded] = useState(Boolean(priority && src))
 
   /**
    * 占位图加载成功
@@ -62,6 +66,7 @@ export default function LazyImage({
       } else {
         imageRef.current.src = defaultPlaceholderSrc
       }
+      setImageLoaded(true)
       imageRef.current.classList.remove('lazy-image-placeholder')
     }
   }, [defaultPlaceholderSrc, fallbackSrc, placeholderSrc])
@@ -74,6 +79,7 @@ export default function LazyImage({
       if (typeof onLoad === 'function') {
         onLoad()
       }
+      setImageLoaded(true)
       if (imageRef.current) {
         imageRef.current.classList.remove('lazy-image-placeholder')
       }
@@ -159,11 +165,15 @@ export default function LazyImage({
     alt: alt || 'Lazy loaded image',
     onLoad: handleThumbnailLoaded,
     onError: handleImageError,
-    className: `${className || ''} lazy-image-placeholder`,
-    style,
+    className: `${className || ''}${imageLoaded ? '' : ' lazy-image-placeholder'}`,
+    style: {
+      aspectRatio: width && height ? `${width} / ${height}` : undefined,
+      containIntrinsicSize: width || height ? undefined : '300px 200px',
+      ...style
+    },
     onClick,
     // 性能优化属性
-    loading: priority ? 'eager' : 'lazy',
+    loading: priority ? 'eager' : loading || 'lazy',
     decoding: 'async',
     // 现代图片格式支持
     ...(siteConfig('WEBP_SUPPORT') && { 'data-webp': true }),
@@ -174,7 +184,7 @@ export default function LazyImage({
   if (title) imgProps.title = title
   if (width) imgProps.width = width
   if (height) imgProps.height = height
-  if (priority) imgProps.fetchPriority = 'high'
+  if (priority) imgProps.fetchpriority = 'high'
 
   if (!src) {
     return null
@@ -191,7 +201,7 @@ export default function LazyImage({
             rel='preload'
             as='image'
             href={adjustImgSize(src, targetImageWidth)}
-            fetchPriority='high'
+            fetchpriority='high'
           />
         </Head>
       )}
