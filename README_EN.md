@@ -49,7 +49,7 @@ A static blog system built with NextJS and Notion API, deployed on Vercel. Desig
 ## 3-Minute Quick Start
 
 ```bash
-# 1) Use Node 20 (nvm recommended)
+# 1) Use Node 22 (nvm recommended; Node 20 cannot install current dependencies)
 nvm use || nvm install
 
 # 2) Install Yarn if needed
@@ -80,7 +80,7 @@ To help new contributors get started quickly, the project keeps docs bilingual w
 ## Themes & preview
 
 - **Live theme switcher**: [preview.tangly1024.com](https://preview.tangly1024.com/)
-- **All 25 themes**: [THEMES_CATALOG.md](./docs/user-guide/themes/THEMES_CATALOG.md)
+- **All 26 themes**: [THEMES_CATALOG.md](./docs/user-guide/themes/THEMES_CATALOG.md)
 - New theme? See [CONTRIBUTING.md](./CONTRIBUTING.md) and [Theme Migration Guide](./docs/developer/THEME_MIGRATION_GUIDE.md)
 
 ## Acknowledgements
