@@ -239,7 +239,7 @@ export default defineConfig({
           ]
         },
         {
-          text: '主题（25）',
+          text: `主题（${themeDocLinks.length}）`,
           collapsed: true,
           items: [
             { text: '主题目录', link: '/user-guide/themes/' },
