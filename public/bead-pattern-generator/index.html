@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#fda760">
+    <title>拼豆图纸生成器</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+
+<body>
+
+    <main>
+        <!-- 左侧控制栏 -->
+        <aside class="controls">
+            <!-- 上传 -->
+            <section class="upload-section">
+                <div id="dropZone" class="drop-zone">
+                    <p>📷 拖拽图片到这里<br>或 <b>点击上传</b></p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+                <div id="previewContainer" class="preview-container hidden">
+                    <div class="preview-img-wrap">
+                        <img id="previewImage" alt="预览">
+                        <div id="cropOverlay" class="crop-overlay hidden">
+                            <div id="cropBox" class="crop-box"></div>
+                        </div>
+                    </div>
+                    <button id="cropToggle" class="btn btn-secondary"
+                        style="font-size:12px;padding:5px;margin-top:4px">✂️ 裁剪图片</button>
+                    <div id="cropActions" class="crop-actions hidden">
+                        <button id="cropApply" class="btn btn-primary" style="font-size:12px;padding:5px;flex:1">✅
+                            应用裁剪</button>
+                        <button id="cropCancel" class="btn btn-secondary" style="font-size:12px;padding:5px;flex:1">✖
+                            取消</button>
+                    </div>
+                    <button id="restoreBtn" class="btn btn-secondary restore-btn">🪄 像素还原</button>
+                    <p id="restoreStatus" class="restore-status hidden"></p>
+                </div>
+            </section>
+
+            <!-- 参数设置 -->
+            <section class="settings-section">
+                <h3>参数设置</h3>
+                <div class="control-group">
+                    <label>珠子品牌</label>
+                    <select id="brandSelect">
+                        <option value="mard" selected>MARD 拼豆</option>
+                        <option value="perler">Perler Beads</option>
+                        <option value="hama">Hama Beads</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>宽度（珠子数）: <span id="widthValue">50</span></label>
+                    <input type="range" id="widthSlider" min="10" max="200" value="50">
+                </div>
+                <div class="control-group">
+                    <label>高度（珠子数）: <span id="heightValue">--</span></label>
+                    <small>根据图片比例自动计算</small>
+                </div>
+                <div class="control-group">
+                    <label>最大颜色数: <span id="maxColorsValue">16</span></label>
+                    <input type="range" id="maxColorsSlider" min="0" max="50" value="16">
+                    <small>0 = 不限制；卡通/简单图建议 8-16 色</small>
+                </div>
+                <div class="control-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="whiteBgEmpty" checked>
+                        白色背景自动留白（转为空格）
+                    </label>
+                    <small>自动把图片边缘相连的白色背景留空</small>
+                </div>
+            </section>
+
+            <!-- 图片调整 -->
+            <section class="settings-section">
+                <h3>图片调整</h3>
+                <div class="control-group">
+                    <label>亮度: <span id="brightnessValue">0</span></label>
+                    <input type="range" id="brightnessSlider" min="-100" max="100" value="0">
+                </div>
+                <div class="control-group">
+                    <label>对比度: <span id="contrastValue">0</span></label>
+                    <input type="range" id="contrastSlider" min="-100" max="100" value="0">
+                </div>
+                <div class="control-group">
+                    <label>饱和度: <span id="saturationValue">0</span></label>
+                    <input type="range" id="saturationSlider" min="-100" max="100" value="0">
+                </div>
+                <button id="resetAdjust" class="btn btn-secondary" style="font-size:12px;padding:5px">↺ 重置调整</button>
+            </section>
+
+            <!-- 显示选项 + 操作按钮 -->
+            <section class="settings-section">
+                <h3>显示选项</h3>
+                <div class="control-group">
+                    <label><input type="checkbox" id="showCodes" checked> 显示颜色代码</label>
+                </div>
+                <div class="control-group">
+                    <label><input type="checkbox" id="showGrid" checked> 显示网格线</label>
+                </div>
+                <div class="control-group">
+                    <label><input type="checkbox" id="showBoardLines"> 显示拼豆板分割线 (29×29)</label>
+                </div>
+                <div class="control-group">
+                    <label><input type="checkbox" id="hideBg"> 隐藏背景色</label>
+                </div>
+                <div class="control-group">
+                    <label><input type="checkbox" id="editMode"> ✏️ 手动编辑模式</label>
+                </div>
+
+                <button id="convertBtn" class="btn btn-primary" disabled>🔄 生成图案</button>
+                <button id="exportBtn" class="btn btn-secondary" disabled>📥 导出 PNG</button>
+                <button id="exportPdfBtn" class="btn btn-secondary" disabled>📄 导出 PDF</button>
+                <button id="compareBtn" class="btn btn-secondary hidden">🔀 对比原图</button>
+            </section>
+
+            <!-- 统计 -->
+            <section id="statsSection" class="stats-section hidden">
+                <h3>统计信息</h3>
+                <div id="statsContent"></div>
+            </section>
+
+            <!-- 图例 -->
+            <section id="legendSection" class="settings-section hidden">
+                <h3>颜色图例</h3>
+                <div id="legendContent"></div>
+            </section>
+        </aside>
+
+        <!-- 主画布区 -->
+        <div class="pattern-area">
+            <div class="pattern-container">
+                <canvas id="patternCanvas"></canvas>
+                <button id="fullscreenBtn" class="btn btn-secondary hidden"
+                    style="position:absolute;top:10px;right:10px;width:auto;z-index:5" title="全屏查看">⛶</button>
+                <div class="empty-state" id="emptyState">
+                    <p style="font-size:16px;margin-bottom:8px">👈 上传一张图片开始</p>
+                    <p style="font-size:13px;color:#94a3b8">支持 JPG / PNG / WebP</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 珠子颜色选择器（编辑模式） -->
+    <div id="beadPicker" class="bead-picker hidden">
+        <div class="bead-picker-header">
+            <span id="bpTitle">选择颜色</span>
+            <button id="bpClose" type="button">×</button>
+        </div>
+        <div class="bead-picker-search">
+            <input type="text" id="bpSearch" placeholder="搜索色号或名称…">
+        </div>
+        <div id="bpColors" class="bead-picker-colors"></div>
+    </div>
+
+    <!-- 悬停提示 -->
+    <div id="beadTooltip" class="bead-tooltip hidden"></div>
+
+    <!-- 像素还原弹窗 -->
+    <div id="pixelRestoreModal" class="modal hidden">
+        <div class="modal-box">
+            <button class="modal-close" id="pixelRestoreClose" type="button">&times;</button>
+            <div class="restore-modal-body">
+                <h2 style="margin-bottom:12px;font-size:18px">🪄 像素还原</h2>
+                <p id="restorePanelStatus" class="restore-panel-status hidden"></p>
+                <div class="restore-preview-row">
+                    <div class="restore-preview-col">
+                        <h4>原图</h4>
+                        <img id="restoreOriginalImg" alt="原图">
+                    </div>
+                    <div class="restore-preview-col">
+                        <h4>还原结果</h4>
+                        <canvas id="restoreResultCanvas"></canvas>
+                    </div>
+                </div>
+                <div class="restore-controls">
+                    <button type="button" class="btn btn-secondary" data-restore-mode="sharp">锐利像素</button>
+                    <button type="button" class="btn btn-secondary" data-restore-mode="smooth">平滑插画</button>
+                    <label style="font-size:13px">倍率
+                        <select id="restoreScale">
+                            <option value="2">2x</option>
+                            <option value="4" selected>4x</option>
+                            <option value="8">8x</option>
+                        </select>
+                    </label>
+                    <button type="button" class="btn btn-primary" id="restoreApplyBtn" disabled>应用结果到主图</button>
+                </div>
+                <p id="restoreMeta" style="font-size:12px;color:#64748b"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 脚本：只保留核心依赖 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
+    <script src="js/colors.js"></script>
+    <script src="js/converter.js"></script>
+    <script src="js/pixel-restore.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
