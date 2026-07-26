@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="theme-color" content="#fda760">
     <title>拼豆图纸生成器</title>
-    <link rel="stylesheet" href="/bead-pattern-generator/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <meta name="robots" content="noindex, nofollow">
 </head>
 
@@ -35,7 +35,7 @@
                         <button id="cropCancel" class="btn btn-secondary" style="font-size:12px;padding:5px;flex:1">✖
                             取消</button>
                     </div>
-                    <button id="restoreBtn" class="btn btn-secondary restore-btn">🪄 像素还原</button>
+                    <button id="restoreBtn" class="btn btn-secondary restore-btn">🖌️ 像素还原</button>
                     <p id="restoreStatus" class="restore-status hidden"></p>
                 </div>
             </section>
@@ -91,6 +91,21 @@
                 <button id="resetAdjust" class="btn btn-secondary" style="font-size:12px;padding:5px">↺ 重置调整</button>
             </section>
 
+        </aside>
+
+        <!-- 主画布区 -->
+        <div class="pattern-area">
+            <div class="pattern-container">
+                <canvas id="patternCanvas"></canvas>
+                <button id="fullscreenBtn" class="btn btn-secondary hidden"
+                    style="position:absolute;top:10px;right:10px;width:auto;z-index:5" title="全屏查看">⛶</button>
+                <div class="empty-state" id="emptyState">
+                    <p style="font-size:16px;margin-bottom:8px">👈 上传一张图片开始</p>
+                    <p style="font-size:13px;color:#94a3b8">支持 JPG / PNG / WebP</p>
+                </div>
+            </div>
+        </div>
+        <aside class="controls controls-right">
             <!-- 显示选项 + 操作按钮 -->
             <section class="settings-section">
                 <h3>显示选项</h3>
@@ -128,20 +143,8 @@
                 <div id="legendContent"></div>
             </section>
         </aside>
-
-        <!-- 主画布区 -->
-        <div class="pattern-area">
-            <div class="pattern-container">
-                <canvas id="patternCanvas"></canvas>
-                <button id="fullscreenBtn" class="btn btn-secondary hidden"
-                    style="position:absolute;top:10px;right:10px;width:auto;z-index:5" title="全屏查看">⛶</button>
-                <div class="empty-state" id="emptyState">
-                    <p style="font-size:16px;margin-bottom:8px">👈 上传一张图片开始</p>
-                    <p style="font-size:13px;color:#94a3b8">支持 JPG / PNG / WebP</p>
-                </div>
-            </div>
-        </div>
     </main>
+
 
     <!-- 珠子颜色选择器（编辑模式） -->
     <div id="beadPicker" class="bead-picker hidden">
@@ -194,10 +197,10 @@
 
     <!-- 脚本：只保留核心依赖 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
-    <script src="/bead-pattern-generator/js/colors.js"></script>
-    <script src="/bead-pattern-generator/js/converter.js"></script>
-    <script src="/bead-pattern-generator/js/pixel-restore.js"></script>
-    <script src="/bead-pattern-generator/js/app.js"></script>
+    <script src="js/colors.js"></script>
+    <script src="js/converter.js"></script>
+    <script src="js/pixel-restore.js"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>

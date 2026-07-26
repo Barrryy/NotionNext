@@ -60,7 +60,7 @@ main {
     margin: 0 auto;
     padding: 16px;
     gap: 16px;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 16px);
 }
 
 /* ── Sidebar ── */
@@ -71,6 +71,36 @@ main {
     flex-direction: column;
     gap: 12px;
     overflow-y: auto;
+}
+
+/* ── 右侧 ── */
+.controls-right {
+    width: 270px;
+}
+
+.pattern-area {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* 手机端：仍上下排列 */
+@media (max-width: 900px) {
+    main {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .controls,
+    .controls-right {
+        width: 100%;
+    }
+
+    .pattern-container {
+        min-height: 360px;
+    }
 }
 
 .controls section {
