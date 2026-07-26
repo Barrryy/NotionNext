@@ -495,7 +495,7 @@ class BeadPatternApp {
         if (!btn) return;
         const hasImage = !!(this.image || this.croppedImage || this._getActivePreviewDataUrl());
         btn.disabled = this._restoreBusy || !hasImage;
-        btn.textContent = this._restoredSource && this._restoreOriginalDataUrl ? '↺ 恢复导入图' : '🪄 像素还原';
+        btn.textContent = this._restoredSource && this._restoreOriginalDataUrl ? '↺ 恢复导入图' : '🖌️ 像素还原';
     }
 
     _syncRestorePanelControls() {
