@@ -1,8 +1,9 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextFetchEvent, NextRequest, NextResponse } from 'next/server'
 import { checkStrIsNotionId, getLastPartOfUrl } from '@/lib/utils'
 import { idToUuid } from 'notion-utils'
 import BLOG from './blog.config'
+import { resolveShortLink } from './lib/shortlinks'
 
 /**
  * Clerk 身份验证中间件
@@ -91,4 +92,18 @@ const authMiddleware = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
     })
   : noAuthMiddleware
 
-export default authMiddleware
+/**
+ * 静态短链接优先于 NotionNext 动态文章路由。
+ * 未命中时完整交回原有 Middleware 逻辑。
+ */
+const middleware = (req: NextRequest, ev: NextFetchEvent) => {
+  const shortLinkTarget = resolveShortLink(req.nextUrl.pathname)
+
+  if (shortLinkTarget) {
+    return NextResponse.redirect(shortLinkTarget, 307)
+  }
+
+  return authMiddleware(req, ev)
+}
+
+export default middleware
