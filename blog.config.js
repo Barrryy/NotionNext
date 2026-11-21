@@ -103,7 +103,8 @@ const BLOG = {
   HEO_HERO_QUOTES:
     process.env.NEXT_PUBLIC_HEO_HERO_QUOTES?.split(',') || [
       '我的个人朋友圈上线啦！',
-      '喝的多了兑了水的水也会醉。'
+      '喝的多了兑了水的水也会醉。',
+      '想成为神可以多喝水。因为神是孤独的，喝水是孤独孤独的。'
     ]
 }
 
