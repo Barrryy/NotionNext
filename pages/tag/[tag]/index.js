@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
-import { buildSlugMap, fromSlug, toSlug } from '@/lib/utils/slugMap'
+import { getTaxonomySlugs, resolveTaxonomyName } from '@/lib/utils/taxonomySlug'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -17,9 +17,8 @@ const Tag = props => {
 export async function getStaticProps({ params: { tag }, locale }) {
   const from = 'tag-props'
   const props = await fetchGlobalAllData({ from, locale })
-  const slugMap = buildSlugMap(getTagNames(props.tagOptions))
   // URL 里的英文 slug 先还原成中文标签名
-  const tagName = fromSlug(tag, slugMap)
+  const tagName = resolveTaxonomyName(tag, props.tagOptions)
 
   // 过滤状态
   props.posts = props.allPages
@@ -78,11 +77,10 @@ export async function getStaticPaths() {
   const from = 'tag-static-path'
   const { tagOptions } = await fetchGlobalAllData({ from })
   const tagNames = getTagNames(tagOptions)
-  const slugMap = buildSlugMap(tagNames)
 
   return {
     paths: tagNames.map(tag => ({
-      params: { tag: toSlug(tag, slugMap) }
+      params: { tag: getTaxonomySlugs(tag, tagOptions)[0] }
     })),
     fallback: true
   }

@@ -1,6 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { getTaxonomySlugs, resolveTaxonomyName } from '@/lib/utils/taxonomySlug'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -17,11 +18,14 @@ export default function Category(props) {
 export async function getStaticProps({ params: { category, page } }) {
   const from = 'category-page-props'
   let props = await fetchGlobalAllData({ from })
+  const categoryName = resolveTaxonomyName(category, props.categoryOptions)
 
   // 过滤状态类型
   props.posts = props.allPages
     ?.filter(page => page.type === 'Post' && page.status === 'Published')
-    .filter(post => post && post.category && post.category.includes(category))
+    .filter(
+      post => post && post.category && post.category.includes(categoryName)
+    )
   // 处理文章页数
   props.postCount = props.posts.length
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
@@ -34,7 +38,7 @@ export async function getStaticProps({ params: { category, page } }) {
   delete props.allPages
   props.page = page
 
-  props = { ...props, category, page }
+  props = { ...props, category: categoryName, page }
 
   return {
     props,
@@ -50,12 +54,15 @@ export async function getStaticProps({ params: { category, page } }) {
 
 export async function getStaticPaths() {
   const from = 'category-paths'
-  const { categoryOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData({
-    from
-  })
+  const { categoryOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData(
+    {
+      from
+    }
+  )
+  const categories = Array.isArray(categoryOptions) ? categoryOptions : []
   const paths = []
 
-  categoryOptions?.forEach(category => {
+  categories.forEach(category => {
     // 过滤状态类型
     const categoryPosts = allPages
       ?.filter(page => page.type === 'Post' && page.status === 'Published')
@@ -69,7 +76,9 @@ export async function getStaticPaths() {
     )
     if (totalPages > 1) {
       for (let i = 1; i <= totalPages; i++) {
-        paths.push({ params: { category: category.name, page: '' + i } })
+        getTaxonomySlugs(category.name, categories).forEach(categorySlug => {
+          paths.push({ params: { category: categorySlug, page: '' + i } })
+        })
       }
     }
   })

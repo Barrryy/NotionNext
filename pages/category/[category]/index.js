@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
-import { buildSlugMap, fromSlug, toSlug } from '@/lib/utils/slugMap'
+import { getTaxonomySlugs, resolveTaxonomyName } from '@/lib/utils/taxonomySlug'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -17,11 +17,8 @@ export default function Category(props) {
 export async function getStaticProps({ params: { category }, locale }) {
   const from = 'category-props'
   let props = await fetchGlobalAllData({ from, locale })
-  const slugMap = buildSlugMap(
-    (props.categoryOptions || []).map(c => c.name)
-  )
   // URL 里的英文 slug 先还原成中文分类名
-  const categoryName = fromSlug(category, slugMap)
+  const categoryName = resolveTaxonomyName(category, props.categoryOptions)
 
   // 过滤状态
   props.posts = props.allPages?.filter(
@@ -69,10 +66,9 @@ export async function getStaticPaths() {
   const from = 'category-paths'
   const { categoryOptions } = await fetchGlobalAllData({ from })
   const categories = Array.isArray(categoryOptions) ? categoryOptions : []
-  const slugMap = buildSlugMap(categories.map(c => c.name))
   return {
     paths: categories.map(category => ({
-      params: { category: toSlug(category?.name, slugMap) }
+      params: { category: getTaxonomySlugs(category?.name, categories)[0] }
     })),
     fallback: true
   }
